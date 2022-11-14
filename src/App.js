@@ -26,7 +26,7 @@ function App() {
   const dispatch = useDispatch();
   const donebtn = (e) => {
     dispatch(addListdone(e));
-    //dispatch(removedoneItem(e))
+    dispatch(removeItem(e))
   };
   const deletebtndone = (e) => {
     confirmAlert({
