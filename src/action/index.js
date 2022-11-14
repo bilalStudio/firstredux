@@ -4,9 +4,9 @@ export const removeItem = (item) => ({
   // payload:true
 });
 
-export const removeItemofdoen = (item) => ({
-  type: "removeItemofdoen",
-  item,
+export const removedoneItem = (items) => ({
+  type: "removedoneItem",
+  items,
   // payload:true
 });
 export const addListdone = (doneText) => ({

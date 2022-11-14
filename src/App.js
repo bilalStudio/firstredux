@@ -6,21 +6,14 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import {
   addList,
-  removeList,
   removeItem,
+  removedoneItem,
   addListdone,
-  decrement,
-  removeItemofdoen,
-  increment,
-  reset,
-  logIn,
-  logOut,
 } from "./action/index";
 import { useState } from "react";
 
 function App() {
   const counter = useSelector((state) => state.counterReducer);
-  // const counter2 = useSelector((state) => state.doneReducer);
   console.log("Counter from reducer", counter);
   const [todo, setTodo] = useState("");
   const handleChanges = (e) => {
@@ -32,8 +25,25 @@ function App() {
   };
   const dispatch = useDispatch();
   const donebtn = (e) => {
-    //alert(e)
     dispatch(addListdone(e));
+    //dispatch(removedoneItem(e))
+  };
+  const deletebtndone = (e) => {
+    confirmAlert({
+      title: "Confirm to delete",
+      message: "Are you sure to do this.",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            dispatch(removedoneItem(e));
+          },
+        },
+        {
+          label: "No",
+        },
+      ],
+    });
   };
   const deletebtn = (e) => {
     confirmAlert({
@@ -58,7 +68,7 @@ function App() {
       <input type="text" onChange={(e) => handleChanges(e)} />
       <button onClick={() => dispatch(addList(todo))}>Add</button>
       <h3>Todo List</h3>
-      {counter.map((todo) => (
+      {counter.todoList?.map((todo) => (
         <ul>
           <li>
             {todo}{" "}
@@ -93,7 +103,7 @@ function App() {
       ))}
       Done List
       <br />
-      {counter.map((todo) => (
+      {counter.doneList?.map((todo) => (
         <ul>
           <li>
             {todo}{" "}
@@ -105,23 +115,10 @@ function App() {
                 marginRight: "4px",
               }}
               onClick={() => {
-                deletebtn(todo);
+                deletebtndone(todo);
               }}
             >
               delete
-            </button>
-            <button
-              style={{
-                backgroundColor: "green",
-                padding: "6px",
-                color: "white",
-                marginRight: "4px",
-              }}
-              onClick={() => {
-                donebtn(todo);
-              }}
-            >
-              Done
             </button>
           </li>
         </ul>
